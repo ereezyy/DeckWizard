@@ -1,0 +1,49 @@
+# DeckWizard - Advanced Card Game Management Suite
+# Python dependencies for the application
+
+# Core dependencies (included with Python 3.8+)
+# sqlite3 - Database management (built-in)
+# json - Data serialization (built-in)
+# argparse - Command-line interface (built-in)
+# logging - Application logging (built-in)
+# datetime - Date and time handling (built-in)
+# dataclasses - Type-safe data structures (built-in)
+# pathlib - Path manipulation (built-in)
+# typing - Type hints (built-in)
+# random - Random number generation (built-in)
+
+# Optional dependencies for enhanced functionality
+# Uncomment and install if you want additional features
+
+# Data analysis and visualization
+# pandas>=1.3.0          # Data manipulation and analysis
+# matplotlib>=3.5.0      # Plotting and visualization
+# seaborn>=0.11.0        # Statistical data visualization
+
+# Web interface (future enhancement)
+# flask>=2.0.0           # Web framework
+# flask-sqlalchemy>=2.5.0  # Database ORM
+# jinja2>=3.0.0          # Template engine
+
+# API integrations
+# requests>=2.25.0       # HTTP library for API calls
+# beautifulsoup4>=4.9.0  # HTML parsing for web scraping
+
+# Advanced data formats
+# pyyaml>=5.4.0          # YAML file support
+# openpyxl>=3.0.0        # Excel file support
+
+# Testing and development
+# pytest>=6.2.0         # Testing framework
+# pytest-cov>=2.12.0    # Coverage reporting
+# black>=21.0.0          # Code formatting
+# flake8>=3.9.0          # Code linting
+
+# Performance optimization
+# numba>=0.53.0          # JIT compilation for numerical code
+# cython>=0.29.0         # C extensions for Python
+
+# Note: DeckWizard is designed to work with Python standard library only
+# No external dependencies are required for basic functionality
+# Install additional packages only if you need specific features
+
