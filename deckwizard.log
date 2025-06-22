@@ -1,0 +1,21 @@
+2025-06-21 15:15:03,052 - INFO - Database initialized successfully
+2025-06-21 15:15:03,052 - INFO - Database initialized successfully
+2025-06-21 15:15:03,059 - INFO - Added card: Fire Bolt
+2025-06-21 15:15:03,060 - INFO - Added card: Lightning Strike
+2025-06-21 15:15:03,061 - INFO - Added card: Goblin Warrior
+2025-06-21 15:15:03,061 - INFO - Added card: Dragon Lord
+2025-06-21 15:15:03,062 - INFO - Added card: Healing Potion
+2025-06-21 15:15:03,063 - INFO - Saved deck: Fire Deck
+2025-06-21 15:15:03,063 - INFO - Created deck: Fire Deck
+2025-06-21 15:15:03,063 - INFO - Saved deck: Fire Deck
+2025-06-21 15:15:03,064 - INFO - Saved deck: Fire Deck
+2025-06-21 15:15:03,064 - INFO - Saved deck: Fire Deck
+2025-06-21 15:15:03,065 - INFO - Saved deck: Fire Deck
+2025-06-21 15:15:03,066 - INFO - Saved deck: Fire Deck
+2025-06-21 15:15:03,066 - INFO - Recorded game result: win
+2025-06-21 15:15:03,067 - ERROR - Error recording game: UNIQUE constraint failed: game_results.id
+2025-06-21 15:15:08,077 - ERROR - Error recording game: database is locked
+2025-06-21 15:15:13,088 - ERROR - Error recording game: database is locked
+2025-06-21 15:15:18,102 - ERROR - Error recording game: database is locked
+2025-06-21 15:24:51,413 - INFO - Database initialized successfully
+2025-06-21 15:24:51,413 - INFO - Database initialized successfully

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeckWizard - Advanced Card Game Management Suite</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-purple-600 to-indigo-700 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
+                        <i class="fas fa-magic text-purple-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">DeckWizard</h1>
+                        <p class="text-purple-200">Advanced Card Game Management Suite</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#cards" class="nav-link hover:text-purple-200 transition-colors">Cards</a>
+                    <a href="#decks" class="nav-link hover:text-purple-200 transition-colors">Decks</a>
+                    <a href="#analytics" class="nav-link hover:text-purple-200 transition-colors">Analytics</a>
+                    <a href="#tournaments" class="nav-link hover:text-purple-200 transition-colors">Tournaments</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Dashboard Overview -->
+        <section id="dashboard" class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Dashboard</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Total Cards</p>
+                            <p class="text-2xl font-bold text-gray-800" id="total-cards">0</p>
+                        </div>
+                        <i class="fas fa-cards-blank text-blue-500 text-2xl"></i>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Active Decks</p>
+                            <p class="text-2xl font-bold text-gray-800" id="total-decks">0</p>
+                        </div>
+                        <i class="fas fa-layer-group text-green-500 text-2xl"></i>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Games Played</p>
+                            <p class="text-2xl font-bold text-gray-800" id="total-games">0</p>
+                        </div>
+                        <i class="fas fa-trophy text-yellow-500 text-2xl"></i>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Win Rate</p>
+                            <p class="text-2xl font-bold text-gray-800" id="win-rate">0%</p>
+                        </div>
+                        <i class="fas fa-chart-line text-purple-500 text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cards Section -->
+        <section id="cards" class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-3xl font-bold text-gray-800">Card Collection</h2>
+                <button id="add-card-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-plus mr-2"></i>Add Card
+                </button>
+            </div>
+            
+            <!-- Card Filters -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <input type="text" id="card-name-filter" placeholder="Search by name..." 
+                           class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <select id="card-type-filter" class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">All Types</option>
+                        <option value="Creature">Creature</option>
+                        <option value="Spell">Spell</option>
+                        <option value="Artifact">Artifact</option>
+                        <option value="Enchantment">Enchantment</option>
+                    </select>
+                    <select id="card-rarity-filter" class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">All Rarities</option>
+                        <option value="Common">Common</option>
+                        <option value="Uncommon">Uncommon</option>
+                        <option value="Rare">Rare</option>
+                        <option value="Epic">Epic</option>
+                        <option value="Legendary">Legendary</option>
+                    </select>
+                    <button id="filter-cards-btn" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-filter mr-2"></i>Filter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cards Grid -->
+            <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Cards will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Decks Section -->
+        <section id="decks" class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-3xl font-bold text-gray-800">Deck Management</h2>
+                <button id="create-deck-btn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-plus mr-2"></i>Create Deck
+                </button>
+            </div>
+            
+            <div id="decks-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Decks will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Analytics & Insights</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold mb-4">Deck Performance</h3>
+                    <canvas id="performance-chart" width="400" height="200"></canvas>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold mb-4">Card Type Distribution</h3>
+                    <canvas id="distribution-chart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tournaments Section -->
+        <section id="tournaments" class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-3xl font-bold text-gray-800">Tournament System</h2>
+                <button id="create-tournament-btn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-trophy mr-2"></i>Create Tournament
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Tournament Type</h3>
+                        <select id="tournament-type" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                            <option value="single_elimination">Single Elimination</option>
+                            <option value="double_elimination">Double Elimination</option>
+                            <option value="round_robin">Round Robin</option>
+                        </select>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Participants</h3>
+                        <textarea id="tournament-participants" rows="4" 
+                                  placeholder="Enter participant names (one per line)"
+                                  class="w-full border border-gray-300 rounded-lg px-3 py-2"></textarea>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Actions</h3>
+                        <button id="generate-bracket-btn" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mb-2">
+                            Generate Bracket
+                        </button>
+                        <button id="export-bracket-btn" class="w-full bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                            Export Bracket
+                        </button>
+                    </div>
+                </div>
+                <div id="tournament-bracket" class="mt-6">
+                    <!-- Tournament bracket will be displayed here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <!-- Add Card Modal -->
+    <div id="add-card-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Add New Card</h3>
+                <button id="close-add-card-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="add-card-form">
+                <div class="space-y-4">
+                    <input type="text" id="card-name" placeholder="Card Name" required
+                           class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                    <input type="number" id="card-cost" placeholder="Mana Cost" required
+                           class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                    <select id="card-type" required class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                        <option value="">Select Type</option>
+                        <option value="Creature">Creature</option>
+                        <option value="Spell">Spell</option>
+                        <option value="Artifact">Artifact</option>
+                        <option value="Enchantment">Enchantment</option>
+                    </select>
+                    <select id="card-rarity" required class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                        <option value="">Select Rarity</option>
+                        <option value="Common">Common</option>
+                        <option value="Uncommon">Uncommon</option>
+                        <option value="Rare">Rare</option>
+                        <option value="Epic">Epic</option>
+                        <option value="Legendary">Legendary</option>
+                    </select>
+                    <input type="text" id="card-set" placeholder="Set Name" required
+                           class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                    <textarea id="card-description" placeholder="Card Description" rows="3"
+                              class="w-full border border-gray-300 rounded-lg px-3 py-2"></textarea>
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="number" id="card-attack" placeholder="Attack"
+                               class="border border-gray-300 rounded-lg px-3 py-2">
+                        <input type="number" id="card-health" placeholder="Health"
+                               class="border border-gray-300 rounded-lg px-3 py-2">
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" id="cancel-add-card" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                        Add Card
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Deck Modal -->
+    <div id="create-deck-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Create New Deck</h3>
+                <button id="close-create-deck-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="create-deck-form">
+                <div class="space-y-4">
+                    <input type="text" id="deck-name" placeholder="Deck Name" required
+                           class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                    <select id="deck-format" required class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                        <option value="">Select Format</option>
+                        <option value="Standard">Standard</option>
+                        <option value="Modern">Modern</option>
+                        <option value="Legacy">Legacy</option>
+                        <option value="Commander">Commander</option>
+                        <option value="Limited">Limited</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" id="cancel-create-deck" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+                        Create Deck
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
+
